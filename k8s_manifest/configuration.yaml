@@ -20,6 +20,16 @@ spec:
         env:
         - name: PORT
           value: "8080"
+        livenessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 8080
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 8080
 
 ---
 
@@ -60,6 +70,16 @@ spec:
             value: "8080"
           - name: PRODUCT_CATALOG_SERVICE_ADDR
             value: "productcatalogservice:3550"
+        livenessProbe:
+          initialDelaySeconds: 5        
+          periodSeconds: 5
+          grpc:
+            port: 8080
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 8080
 
 ---
 
@@ -100,6 +120,16 @@ spec:
             value: "3550"
           - name: DISABLE_PROFILER
             value: "1"
+        livenessProbe:
+          initialDelaySeconds: 5        
+          periodSeconds: 5
+          grpc:
+            port: 3550
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 3550
 
 ---
 
@@ -140,6 +170,15 @@ spec:
             value: "50051"
           - name: DISABLE_PROFILER
             value: "1"
+        livenessProbe:
+          periodSeconds: 5
+          grpc:
+            port: 50051
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 50051
 
 ---
 
@@ -181,6 +220,16 @@ spec:
             value: "7000"
           - name: DISABLE_PROFILER
             value: "1"
+        livenessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 7000
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 7000
 
 ---
 
@@ -216,6 +265,16 @@ spec:
         image: gcr.io/google-samples/microservices-demo/shippingservice:v0.8.0
         ports:
         - containerPort: 50051
+        livenessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 50051
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 50051
 
 ---
 
@@ -254,6 +313,16 @@ spec:
         env:
           - name: PORT
             value: "9555"
+        livenessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 9555
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 9555
 
 ---
 
@@ -294,6 +363,16 @@ spec:
             value: "7070"
           - name: REDIS_ADDR
             value: "redis-cart:6379"
+        livenessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 7070
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 7070
 
 ---
 
@@ -329,6 +408,16 @@ spec:
         image: redis:alpine
         ports:
         - containerPort: 6379
+        livenessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          tcpSocket:
+            port: 6379
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          tcpSocket:
+            port: 6379
         volumeMounts:
           - mountPath: /data
             name: redis-data
@@ -385,6 +474,16 @@ spec:
             value: "emailservice:5000"
           - name: PAYMENT_SERVICE_ADDR
             value: "paymentservice:50051"
+        livenessProbe:
+          initialDelaySeconds: 5        
+          periodSeconds: 5
+          grpc:
+            port: 5050
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          grpc:
+            port: 5050
 
 ---
 
@@ -437,7 +536,19 @@ spec:
             value: "checkoutservice:5050"
           - name: AD_SERVICE_ADDR
             value: "adservice:9555"            
-          
+        livenessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          httpGet:
+            port: 8080
+            path: "/_healthz"
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          httpGet:
+            port: 8080
+            path: "/_healthz"          
+
 ---
 
 apiVersion: v1
